@@ -7,7 +7,6 @@ import { useGetCryptoNewsQuery } from '../app/services/cryptoNewsApi';
 import {Loader} from '../components/Loader';
 
 const demoImage = 'src/assets/images/no-content.png';
-
 const { Text, Title } = Typography;
 const { Option } = Select;
 
@@ -15,9 +14,7 @@ export const News = ({ simplified }: CryptocurrenciesProp) => {
     const [newsCategory, setNewsCategory] = useState('Cryptocurrency');
     const { data } = useGetCryptoQuery(100);
     const { data: cryptoNews } = useGetCryptoNewsQuery({ newsCategory, count: simplified ? 6 : 12 });
-
     if (!cryptoNews?.value) return <Loader />;
-
     return (
         <Row gutter={[24, 24]}>
             {!simplified && (

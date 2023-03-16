@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { CoinInput } from '../../entities/Coin';
 import { CoinsExchangeInput, CoinsInput } from '../../entities/Coins';
 
 const cryptoApiHeader = {
@@ -20,10 +21,10 @@ export const cryptoApi = createApi({
             query: ( params: CoinsExchangeInput) => createRequest(`/coin/${params.uuid}/exchanges`, params),
         }),
         getCryptoDetails: builder.query({
-            query: (uuid) => createRequest(`/coin/${uuid}`),
+            query: (params: CoinInput) => createRequest(`/coin/${params.uuid}`, params),
         }),
         getCryptoHistory: builder.query({
-            query: ({ uuid, timeperiod }) => createRequest(`coin/${uuid}/history?timePeriod=${timeperiod}`),
+            query: (params: CoinInput) => createRequest(`coin/${params.uuid}/history`, params),
         }),
     })
 })

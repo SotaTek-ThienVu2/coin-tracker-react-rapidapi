@@ -1,20 +1,34 @@
 import React from "react";
 import millify from "millify";
-import { Typography, Row, Col, Statistic } from "antd";
+import { Typography, Row, Col, Statistic, Result, Button } from "antd";
 import { Link } from "react-router-dom";
 
 import { useGetCryptoQuery } from "../app/services/cryptoApi";
 import { Cryptocurrencies } from "./Cryptocurrencies";
 import { News } from "./News";
 import { Loader } from "../components/Loader";
+import { ErrorPage } from "../components/ErrorPage";
 
 const { Title } = Typography;
 
 export const HomePage = () => {
-    const { data, isFetching, error } = useGetCryptoQuery(10);
+    const { data, isFetching, isError, error } = useGetCryptoQuery(10);
     const globalStats = data?.data?.stats;
-    if (isFetching || error) {
+    if (isFetching) {
         return <Loader />;
+    }
+
+    if (isError) {
+        return (
+            <ErrorPage
+                error={error}
+                extra={
+                    <Button type="primary">
+                        <Link to="/">Home</Link>
+                    </Button>
+                }
+            />
+        );
     }
 
     return (
